@@ -1,0 +1,257 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Tahoma";
+}
+/*
+body{
+
+    background-color: rgb(198, 153, 56);
+
+}*/
+
+h2{
+    display: inline;
+    position: absolute;
+    top: 15px;
+    left: 50%; /* Start at the center of the page */
+    transform: translateX(-50%);
+}
+#repeat {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    appearance: none; /* Removes default browser styling */
+    width: 50px; /* Set width to ensure it's circular */
+    height: 50px; /* Set height to ensure it's circular */
+    border-radius: 50%; /* Makes the select circular */
+    border: 2px solid #007BFF; /* Adds a border */
+    text-align: center; /* Centers the text */
+    font-size: 16px; /* Adjusts font size */
+    outline: none; /* Removes outline when focused */
+    cursor: pointer; /* Changes cursor to pointer */
+    background-color: white; /* Background color */
+    color: #007BFF; /* Text color */
+    display: flex; /* Flexbox for centering text */
+    align-items: center; /* Vertical centering */
+    justify-content: center; /* Horizontal centering */
+}
+
+#repeat:focus {
+    border-color: #0056b3; /* Change border color on focus */
+}
+
+.mic-toggle img{
+    width: 40px;
+    height: 40px;
+}
+.mic-toggle{
+    position: absolute;
+  /* display: block; */
+  top: 15px;
+  left: 30px;
+  border: none;
+   width: 3rem;
+   height: 3rem;
+   border-radius: 50%;
+   background-color: rgba(255, 255, 255, 0.353);
+   margin-bottom:  4rem;
+}
+
+
+.mic-toggle:after,
+.mic-toggle:before{
+    --pad: 0rem;
+    content: '';
+    position: absolute;
+    z-index: 0;
+    background-color: rgba(0, 0, 255, 0.2);
+    top: var(--pad);
+    left: var(--pad);
+    bottom: var(--pad);
+    right: var(--pad);
+    border-radius: 50%;
+}
+.mic-toggle:after{
+    transition: 0.4s;
+}
+
+.mic-toggle:before{
+    transition: 0.2s;
+}
+.mic-toggle:hover:before{
+    --pad: -1rem;
+}
+.mic-toggle:hover:after{
+    --pad: -2rem;
+}
+.mic-toggle span{
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    font-size: 6rem;
+}
+
+.mic-toggle.is-recording:after{
+    animation: smoothPadAfter 0.6s ease-in alternate-reverse forwards infinite;
+}
+.mic-toggle.is-recording:before{
+    animation: smoothPadBefore 0.6s ease-in alternate-reverse forwards infinite;
+}
+@keyframes smoothPadAfter{
+    0%{
+        top: -2rem;
+        left: -2rem;
+        bottom: -2rem;
+        right: -2rem;
+    }
+    100%{
+        top: -1rem;
+        left: -1rem;
+        bottom: -1rem;
+        right: -1rem;
+    }
+}
+@keyframes smoothPadBefore{
+    0%{
+        top: -1rem;
+        left: -1rem;
+        bottom: -1rem;
+        right: -1rem;
+    }
+    100%{
+        top: -2rem;
+        left: -2rem;
+        bottom: -2rem;
+        right: -2rem;
+    }
+}
+
+.is-hidden{
+    display: none;
+}
+body{
+    background-color: rgb(226, 216, 235);
+
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f4f4f9;
+    min-height: 100vh;
+    width: 70%;
+    margin: auto;
+}
+.playback{
+    position: fixed;
+    bottom: 0px;
+    width: 70%;
+    left: 50%; /* Start at the center of the page */
+    transform: translateX(-50%);
+    margin: auto;
+    background-color: white;
+    box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.2);
+}
+.counter{
+    position: fixed;
+    bottom: 80px;
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+}
+.from-to{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 20px; 
+}
+
+
+
+
+#checkbox-container {
+    background-color: rgb(61, 191, 85);
+    background-color: rgb(198, 153, 56);
+    border-radius: 20px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    gap: 10px;
+    max-width: 300px; /* Adjust the container width */
+}
+
+.circle-checkbox {
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+
+.circle-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.circle-checkbox span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.circle-checkbox input[type="checkbox"]:checked + span {
+    background-color: rgb(102, 102, 221);
+    background-color: rgb(85, 236, 102);
+}
+
+@media(max-width: 500px){
+    main{
+        width: 90%;
+    }
+    .playback{
+        width: 90%;
+    }
+}
+
+
+  /* Style for the custom modal */
+  #customModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+.modal-buttons {
+    margin-top: 20px;
+}
+ .btn {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+} 
+.counter{
+    font-weight: 600;
+}
+.checkCounter{
+    color: blue;
+}
