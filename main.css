@@ -144,6 +144,7 @@ h2{
 }
 body{
     background-color: rgb(226, 216, 235);
+    height: 100vh;
 
 }
 
@@ -152,10 +153,12 @@ main {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
     background-color: #F5F5DC !important;
-    height: 100vh;
+    height: 100%;
     width: 70%;
     margin: auto;
+    margin-bottom: 50px;
     border-top: 10px solid  rgb(198, 153, 56);
     border-bottom: 10px solid  rgb(198, 153, 56);
     box-shadow: 0 0 5px gray;
