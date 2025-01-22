@@ -12,8 +12,18 @@
     </style>
 </head>
 <body>
+    <div class="install-prompt">
+        <div class="modal">
+            <p> هل تريد تثبيت التطبيق؟</p>
+            <button class="install" id="install-btn">نعم</button>
+            <button class="install" id="dismiss-btn">ليس الآن</button>
+        </div>
+    </div>
     <header>
+        <button class="refresh" ><img src="repeat.png" alt=""></button>
+
         <select name="" id="repeat">
+            <option value="6">6</option>
             <option value="12">12</option>
             <option value="24">24</option>
             <option value="36" selected>36</option>
@@ -23,15 +33,14 @@
         <button class="mic-toggle" id="mic"><img src="microphone.png" alt=""></button>
     </header>
 
- 
- 
+
     <main>
         <div class="from-to">
             <h4 style="margin-bottom: 50px; display: inline;" contenteditable="true"> من -- إلى -- </h4>
         </div>
 
         <div id="checkbox-container"></div>
-        <div id="customModal">
+        <div id="customModal" style="display: none;">
             <div class="modal-content">
                 <p>هل تريد حفظ المحفوظ؟</p>
                 <div class="modal-buttons">
@@ -45,5 +54,6 @@
     <audio controls class="playback"></audio>
     <script src="main.js"></script>
     <script src="index.js"></script>
+    <script src="install.js"></script>
 </body>
 </html>
