@@ -17,9 +17,11 @@ const counter = document.querySelector('.checkCounter')
 counter.innerHTML = currentCheckbox
 //checkbox generator 
 let lunch = JSON.parse(localStorage.getItem("value")) || 36
+console.log(lunch)
 generateStyledCheckboxes(lunch);
 const select =  document.querySelector('#repeat')
 select.value = lunch
+document.querySelector('.selectedRepeat').innerHTML= lunch
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++RECORD
  const mic_btn = document.querySelector('#mic');
  const playback = document.querySelector('.playback');
@@ -127,10 +129,54 @@ select.addEventListener('change', function() {
             }
     
             // Add event listener to save state on change
-            input.addEventListener('change', () => {
-                savedStates[input.id] = input.checked;
-                localStorage.setItem('checkboxStates', JSON.stringify(savedStates));
-            });
+            function generateStyledCheckboxes(number) {
+                const container = document.getElementById('checkbox-container');
+                container.innerHTML = ''; // Clear the container
+
+                // Get saved checkbox states from localStorage
+                const savedStates = JSON.parse(localStorage.getItem('checkboxStates')) || {};
+
+                for (let i = 1; i <= number; i++) {
+                    const label = document.createElement('label');
+                    label.className = 'circle-checkbox';
+                    label.id = `check-${i}`;
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.id = `checkbox-${i}`;
+
+                    // Restore the checkbox state from localStorage
+                    if (savedStates[input.id]) {
+                        input.checked = true;
+                    }
+
+                    // Add event listener for 'change' event
+                    input.addEventListener('change', () => {
+                        savedStates[input.id] = input.checked;
+                        localStorage.setItem('checkboxStates', JSON.stringify(savedStates));
+
+                        // Different actions for checked and unchecked states
+                        if (input.checked) {
+                            console.log(`Checkbox ${input.id} is checked.`);
+                            currentCheckbox = (currentCheckbox + 1) % number; // Update counter
+                        } else {
+                            console.log(`Checkbox ${input.id} is unchecked.`);
+                            currentCheckbox = (currentCheckbox - 1) % number; // Update counter
+                        }
+
+                        // Update the UI counter
+                        counter.innerHTML = currentCheckbox;
+                    });
+
+                    const span = document.createElement('span');
+
+                    label.appendChild(input);
+                    label.appendChild(span);
+                    container.appendChild(label);
+                }
+            }
+
+
     
             // Create the span element
             const span = document.createElement('span');
