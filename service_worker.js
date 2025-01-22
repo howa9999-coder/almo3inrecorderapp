@@ -4,11 +4,12 @@ const OFFLINE_PAGE = "offline.html"; // Fallback offline page
 const urlsToCache = [
   "index.html",
   "index.js",
+  "install.js",
   "manifest.json",
   "main.css",
   "main.js",
-  "icon192.png",
-  "icon512.ico",
+  "repeat192.png",
+  "repeat.png",
   OFFLINE_PAGE, // Add fallback page to cache
 ];
 
