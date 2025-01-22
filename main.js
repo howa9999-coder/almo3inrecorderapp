@@ -1,4 +1,6 @@
-generateStyledCheckboxes(36);
+
+
+
 //============================================================Local storage
 // Function to handle content changes
 let miqdarContent = JSON.parse(localStorage.getItem("miqdar")) || "من -- إلى --";
@@ -9,7 +11,15 @@ miqdar.addEventListener('input', function(){
     miqdarContent = miqdar.innerHTML
     localStorage.setItem("miqdar", JSON.stringify(miqdarContent));
 })
-
+//current checkboxes counter
+let currentCheckbox = JSON.parse(localStorage.getItem("currentCheckbox")) || 0;
+const counter = document.querySelector('.checkCounter')
+counter.innerHTML = currentCheckbox
+//checkbox generator 
+let lunch = JSON.parse(localStorage.getItem("value")) || 36
+generateStyledCheckboxes(lunch);
+const select =  document.querySelector('#repeat')
+select.value = lunch
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++RECORD
  const mic_btn = document.querySelector('#mic');
  const playback = document.querySelector('.playback');
@@ -60,8 +70,10 @@ miqdar.addEventListener('input', function(){
          confirme();
      }
  }
- document.querySelector('#repeat').addEventListener('change', function() {
+ //=========================================== select function
+select.addEventListener('change', function() {
      const value = this.value;
+     localStorage.setItem("value", JSON.stringify(value));
      generateStyledCheckboxes(value);
      const  selectedRepeat = document.querySelector('.selectedRepeat')
     selectedRepeat.innerHTML = value
@@ -70,53 +82,24 @@ miqdar.addEventListener('input', function(){
 
 //++++++++++++++++++++++++++++++++++++++++++++++ Add a 'change' event listener to each checkbox
 
-    let currentCheckbox = 0;
- const count = document.querySelector('.checkCounter')
+    
     // Select all checkboxes in the container
     const checkboxes = document.querySelectorAll('#checkbox-container input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
-        const counter = document.querySelector('.checkcounter')
         checkbox.addEventListener('change', (event) => {
             if (event.target.checked) {
-                currentCheckbox = (currentCheckbox + 1) % checkboxes.length                
-                count.innerHTML = currentCheckbox
+                currentCheckbox = (currentCheckbox + 1) % checkboxes.length   
+                localStorage.setItem("currentCheckbox", JSON.stringify(currentCheckbox));             
+                counter.innerHTML = currentCheckbox
                 
             } else {
                 currentCheckbox = (currentCheckbox - 1) % checkboxes.length
-                count.innerHTML = currentCheckbox
+                localStorage.setItem("currentCheckbox", JSON.stringify(currentCheckbox));
+                counter.innerHTML = currentCheckbox
             }
         });
     });
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++CHECKBOXES GENERATOR
-
- /* function generateStyledCheckboxes(number) {
-     // Get the container
-     const container = document.getElementById('checkbox-container');
-     // Clear existing checkboxes
-     container.innerHTML = '';
-     // Generate the specified number of checkboxes
-     for (let i = 1; i <= number; i++) {
-         // Create the label element
-         const label = document.createElement('label');
-         label.className = 'circle-checkbox';
-         label.id = `check-${i}`;
- 
-         // Create the input element
-         const input = document.createElement('input');
-         input.type = 'checkbox';
- 
-         // Create the span element
-         const span = document.createElement('span');
- 
-         // Append input and span to label
-         label.appendChild(input);
-         label.appendChild(span);
- 
-         // Append the label to the container
-         container.appendChild(label);
-     }
- } */
-
      function generateStyledCheckboxes(number) {
         // Get the container
         const container = document.getElementById('checkbox-container');
@@ -172,6 +155,7 @@ function cycleCheckboxes() {
     
     // Move to the next checkbox (if at the end, it loops back)
     currentCheckbox = (currentCheckbox + 1) % checkboxes.length;
+    localStorage.setItem("currentCheckbox", JSON.stringify(currentCheckbox));
     
 }
 
@@ -190,12 +174,43 @@ function cycleCheckboxes() {
      // Close the modal after the user selects an option
      document.getElementById("customModal").style.display = "none";
  }
-
+//===================================================the saved states of the checkboxes
  function cycleCheckboxes() {
-     const checkboxes = document.querySelectorAll('#checkbox-container input');
-     if (checkboxes[currentCheckbox]) {
-         checkboxes[currentCheckbox].checked = true;
-     }
-     currentCheckbox = (currentCheckbox + 1) % checkboxes.length;
-     count.innerHTML = currentCheckbox
- }
+    const checkboxes = document.querySelectorAll('#checkbox-container input[type="checkbox"]');
+
+    // Check the current checkbox and save its state
+    if (checkboxes[currentCheckbox]) {
+        checkboxes[currentCheckbox].checked = true;
+
+        // Update the saved states in localStorage
+        const savedStates = JSON.parse(localStorage.getItem('checkboxStates')) || {};
+        savedStates[checkboxes[currentCheckbox].id] = true;
+        localStorage.setItem('checkboxStates', JSON.stringify(savedStates));
+    }
+
+    // Move to the next checkbox (if at the end, it loops back)
+    currentCheckbox = (currentCheckbox + 1) % checkboxes.length;
+    localStorage.setItem("currentCheckbox", JSON.stringify(currentCheckbox));
+
+    // Update the counter display
+    counter.innerHTML = currentCheckbox;
+}
+
+
+//========================Refresh function
+const refresh = document.querySelector('.refresh');
+refresh.addEventListener('click', function () {
+    currentCheckbox = 0;
+    localStorage.setItem("currentCheckbox", JSON.stringify(currentCheckbox));
+    counter.innerHTML = currentCheckbox;
+
+    // Get all checkboxes and uncheck them
+    const checkboxes = document.querySelectorAll('#checkbox-container input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Clear the checkbox states from localStorage
+    localStorage.setItem('checkboxStates', JSON.stringify({}));
+});
+
